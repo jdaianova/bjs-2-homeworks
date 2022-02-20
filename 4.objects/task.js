@@ -10,6 +10,7 @@ Student.prototype.setSubject = function (subjectName) {
 
 Student.prototype.addMark = function (mark) {
   if(this.marks === undefined){
+    this.marks = [];
     this.marks.push(mark);
   } else {
     this.marks.push(mark);
