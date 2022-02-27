@@ -1,0 +1,60 @@
+class AlarmClock {
+  constructor() {
+    this.alarmCollection = [];
+    this.timerId = null;
+  }
+
+  addClock(time, callback, id) {
+    if (isNaN(id)) {
+      throw new Error('error text');
+    };
+    for (let i in this.alarmCollection) {
+      if (this.alarmCollection[i][2] === id) {
+        return console.error('Такой будильник уже существует!');
+      };
+    };
+    this.alarmCollection.push([time, callback, id]);
+  }
+
+  removeClock(id) {
+    let startLenght = clock.alarmCollection.length;
+    for (let i in this.alarmCollection) {
+      if (this.alarmCollection[i][2] === id) {
+        this.alarmCollection.splice(i, 1);
+      };
+    };
+    if (startLenght - clock.alarmCollection.length === 1) {
+      return true;
+    }else{
+      return false;
+    };
+  }
+
+  getCurrentFormattedTime() {
+    let currentTime = new Date();
+    return currentTime.getHours()+':'+currentTime.getMinutes();
+  }
+
+  start() {
+    function checkClock(arr) {
+      if (arr[0] === clock.getCurrentFormattedTime()) {
+        console.log(arr[1]);
+      };
+    }
+  }
+
+  stop() {
+
+  }
+
+  printAlarms() {
+    this.alarmCollection.splice(0, this.alarmCollection.lenth);
+  }
+
+
+  clearAlarms() {
+    console.log('start clearAlarms');
+    let n = this.alarmCollection.length;
+    this.alarmCollection.splice(0, n);
+  }
+}
