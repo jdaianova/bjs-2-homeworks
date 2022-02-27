@@ -41,10 +41,22 @@ class AlarmClock {
         console.log(arr[1]);
       };
     }
+    function checkClocks() {
+      for (let i in this.alarmCollection) {
+        checkClock(this.alarmCollection[i]);
+      };
+    }
+    if (this.timerId === null) {
+      this.timerId = 0;
+    };
+    setInterval(checkClocks(), 1000);
   }
 
   stop() {
-
+    if (!isNaN(this.timerId)) {
+      clearInterval();
+      this.timerId = null;
+    };
   }
 
   printAlarms() {
