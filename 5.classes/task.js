@@ -90,10 +90,33 @@ class Library {
   giveBookByName(bookName) {
     for (let i in this.books) {
       if (this.books[i].name === bookName) {
+        let temporary = this.books[i]
         this.books.splice(i, 1);
-        return this.books[i];
+        return temporary;
       };
     };
     return null;
   };
+}
+
+//------------------------------------------
+class Marks {
+  constructor(mark, subject) {
+    this.subject = subject;
+    this.mark = [];
+  }
+}
+
+class Student {
+  constructor(name, gender, age) {
+    this.name = name;
+    this.gender = gender;
+    this.age = age;
+  }
+
+addMark(mark, subject) {
+  this.subject = subject;
+
+}
+
 }
