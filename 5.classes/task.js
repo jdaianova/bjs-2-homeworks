@@ -100,12 +100,6 @@ class Library {
 }
 
 //------------------------------------------
-class Marks {
-  constructor(mark, subject) {
-    this.subject = subject;
-    this.mark = [];
-  }
-}
 
 class Student {
   constructor(name, gender, age) {
@@ -114,9 +108,5 @@ class Student {
     this.age = age;
   }
 
-addMark(mark, subject) {
-  this.subject = subject;
-
-}
 
 }
