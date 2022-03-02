@@ -106,7 +106,38 @@ class Student {
     this.name = name;
     this.gender = gender;
     this.age = age;
+    this.marks_subjects = {};
   }
 
+  addMark(mark, subject) {
+    if (!this.marks_subjects[subject]) {
+      this.marks_subjects[subject] = [];
+    };
+    if (mark>5 || mark<1 || typeof mark === 'string' ) {
+     return console.log(`оценка ${mark} студента ${this.name} по предмету ${subject} не внесена в журнал.\nОценка должна быть числом от 1 до 5.`);
+    }
+    this.marks_subjects[subject].push(mark);
+  }
+
+  getAverageBySubject(subject) {
+    if (!this.marks_subjects[subject]) {
+      return console.log(subject + ' Несуществующий предмет.');
+    };
+    return this.marks_subjects[subject].reduce((sum, elem) => sum + elem, 0)/this.marks_subjects[subject].length;
+  }
+
+  getAverage() {
+    let sum = 0, i = 0;
+    for (let key in this.marks_subjects) {
+      sum = sum + this.marks_subjects[key].reduce((summa, elem) => summa + elem, 0)/this.marks_subjects[key].length;
+      ++i;
+    };
+    return sum/i;
+  }
+
+  exclude(reason) {
+  delete this.marks_subjects;
+  this.excluded = reason;
+  }
 
 }
