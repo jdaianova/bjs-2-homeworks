@@ -8,65 +8,71 @@ class AlarmClock {
     if (isNaN(id)) {
       throw new Error('error text');
     };
-    for (let i in this.alarmCollection) {
-      if (this.alarmCollection[i][2] === id) {
-        return console.error('Такой будильник уже существует!');
-      };
+    if (this.alarmCollection.some((element) => element.id === id)) {
+      console.error('Такой будильник уже существует!');
+    } else {
+      this.alarmCollection.push({time, callback, id});
     };
-    this.alarmCollection.push([time, callback, id]);
   }
 
   removeClock(id) {
-    let startLenght = clock.alarmCollection.length;
-    for (let i in this.alarmCollection) {
-      if (this.alarmCollection[i][2] === id) {
-        this.alarmCollection.splice(i, 1);
-      };
-    };
-    if (startLenght - clock.alarmCollection.length === 1) {
-      return true;
-    }else{
-      return false;
-    };
+    const length = this.alarmCollection.length;
+    this.alarmCollection = this.alarmCollection.filter(element => element.id !== id);
+    console.log('удален звонок c id ', id);
+    return this.alarmCollection.length !== length;
   }
 
   getCurrentFormattedTime() {
-    let currentTime = new Date();
-    return currentTime.getHours()+':'+currentTime.getMinutes();
+    return new Date().toLocaleTimeString("ru-Ru", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  }
+
+  checkClock(element) {
+    console.log('checkClock ', element);
+    console.log('element.id ', element.id);
+    if (element.time === this.getCurrentFormattedTime()) {
+      element.callback();
+      this.removeClock(element.id);
+    };
+  }
+
+  checkClocks() {
+    this.alarmCollection.forEach(element => {this.checkClock(element)});
   }
 
   start() {
-    function checkClock(arr) {
-      if (arr[0] === clock.getCurrentFormattedTime()) {
-        console.log(arr[1]);
-      };
+    if (!this.timerId) {
+      this.timerId = setInterval(() => this.checkClocks(), 1000);
     }
-    function checkClocks() {
-      for (let i in this.alarmCollection) {
-        checkClock(this.alarmCollection[i]);
-      };
-    }
-    if (this.timerId === null) {
-      this.timerId = 0;
-    };
-    setInterval(checkClocks(), 1000);
   }
 
   stop() {
-    if (!isNaN(this.timerId)) {
-      clearInterval();
+    if (this.timerId) {
+      clearInterval(this.timerId);
       this.timerId = null;
-    };
+    }
   }
 
   printAlarms() {
-    this.alarmCollection.splice(0, this.alarmCollection.lenth);
+    console.log('Печать всех будильников в количестве: ' + this.alarmCollection.length);
+    this.alarmCollection.forEach(alarm => {
+      console.log(`id: ${alarm.id}, time: ${alarm.time}`);
+    });
   }
-
 
   clearAlarms() {
-    console.log('start clearAlarms');
-    let n = this.alarmCollection.length;
-    this.alarmCollection.splice(0, n);
+    this.stop();
+    this.alarmCollection = [];
   }
 }
+
+const a = new AlarmClock();
+a.addClock(a.getCurrentFormattedTime(), () => console.log('Дзинь!'), 1);
+a.addClock(a.getCurrentFormattedTime(), () => console.log('Дзинь!'), 1);
+a.removeClock(1);
+a.addClock(a.getCurrentFormattedTime(), () => console.log('Дзинь-дзинь!'), 2);
+a.addClock('20:00', () => console.log('Дзинь-дзинь-дзинь!'), 3);
+a.printAlarms();
+a.start();
