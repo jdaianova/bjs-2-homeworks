@@ -10,7 +10,7 @@ function wrapper(...args) {
     let result = func(...args);
     cache.push({hash: hash, value: result });
     if (cache.length > 5) {
-      cache.splice(0,1);
+      cache.shift();
     }
     console.log("Вычисляем: " + result);
     return "Вычисляем: " + result;
@@ -22,10 +22,7 @@ function debounceDecoratorNew(func, ms) {
   let timeout, flag = false;
   function wrapper(...args) {
     if (flag === false) {
-      timeout = setTimeout(() => {
-        flag = false;
-        func(...args);
-      }, ms);
+      func(...args);
       flag = true;
     } else {
       clearTimeout(timeout);
@@ -35,6 +32,17 @@ function debounceDecoratorNew(func, ms) {
   return wrapper;
 }
 
-function debounceDecorator2(func,ms) {
-
+function debounceDecoratorNew2(func, ms) {
+  let count = 0, timeout, flag = false;
+  function wrapper(...args) {
+    count += 1;
+    if (flag === false) {
+      func(...args);
+      flag = true;
+    } else {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func(...args), ms);
+    }
+  }
+  return wrapper;
 }
