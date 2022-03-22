@@ -33,8 +33,8 @@ function debounceDecoratorNew(func, ms) {
 }
 
 function debounceDecoratorNew2(func, ms) {
-  let count = 0, timeout, flag = false;
-  function wrapper(...args) {
+  let timeout, flag = false;
+  function wrapper(count, ...args) {
     count += 1;
     if (flag === false) {
       func(...args);
