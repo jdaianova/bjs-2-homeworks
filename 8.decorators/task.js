@@ -34,8 +34,9 @@ function debounceDecoratorNew(func, ms) {
 
 function debounceDecoratorNew2(func, ms) {
   let timeout, flag = false;
-  function wrapper(count, ...args) {
-    count += 1;
+  function wrapper(...args) {
+    wrapper.counter++;
+    //console.log( `функция вызвана раз:${wrapper.counter}` );
     if (flag === false) {
       func(...args);
       flag = true;
@@ -44,5 +45,6 @@ function debounceDecoratorNew2(func, ms) {
       timeout = setTimeout(() => func(...args), ms);
     }
   }
+  wrapper.counter = 0;
   return wrapper;
 }
