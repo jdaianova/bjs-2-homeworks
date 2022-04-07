@@ -15,6 +15,7 @@ function validateCount(value) {
 }
 
 class Triangle {
+
   constructor(side1, side2, side3) {
     this.side1 = side1;
     this.side2 = side2;
@@ -25,20 +26,29 @@ class Triangle {
   }
 
   getPerimeter() {
+    if (typeof this == "undefined") {
+      return 'Ошибка! Треугольник не существует';
+    };
     return Number((this.side1 + this.side2 + this.side3).toFixed(3));
   }
 
   getArea() {
+    if (typeof this == "undefined") {
+      return 'Ошибка! Треугольник не существует';
+    };
     let p = this.getPerimeter() * 0.5;
     return Number(Math.sqrt(p * (p-this.side1) * (p-this.side2) * (p-this.side3)).toFixed(3));
   }
+
 }
 
 function getTriangle(side1, side2, side3) {
   try {
     return new Triangle(side1, side2, side3);
-  } catch (e) {
-    console.log('Ошибка! Треугольник не существует');
-    return;
+  } catch (error) {
+    return {
+      getPerimeter: this.getPerimeter(),
+      getArea: this.getArea()
     };
-  }
+  };
+}
