@@ -9,7 +9,7 @@ function parseCount(value) {
 function validateCount(value) {
   try {
     return parseCount(value);
-  } catch(error) {
+  } catch (error) {
     return error;
   };
 }
@@ -21,24 +21,19 @@ class Triangle {
     this.side2 = side2;
     this.side3 = side3;
     if ((side1 + side2 < side3) || (side2 + side3 < side1) || (side3 + side1 < side2)) {
-      throw new Error("Треугольник с такими сторонами не существует");
+      const error = new Error("Треугольник с такими сторонами не существует");
+      throw error;
     };
   }
 
   getPerimeter() {
-    if (typeof this == "undefined") {
-      return 'Ошибка! Треугольник не существует';
-    };
     return Number((this.side1 + this.side2 + this.side3).toFixed(3));
-  }
+  };
 
   getArea() {
-    if (typeof this == "undefined") {
-      return 'Ошибка! Треугольник не существует';
-    };
     let p = this.getPerimeter() * 0.5;
-    return Number(Math.sqrt(p * (p-this.side1) * (p-this.side2) * (p-this.side3)).toFixed(3));
-  }
+    return Number(Math.sqrt(p * (p - this.side1) * (p - this.side2) * (p - this.side3)).toFixed(3));
+  };
 
 }
 
@@ -47,8 +42,7 @@ function getTriangle(side1, side2, side3) {
     return new Triangle(side1, side2, side3);
   } catch (error) {
     return {
-      getPerimeter: this.getPerimeter(),
-      getArea: this.getArea()
+      
     };
   };
 }
