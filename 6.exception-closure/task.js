@@ -26,8 +26,9 @@ class Triangle {
     };
   }
 
+
   getPerimeter() {
-    return Number((this.side1 + this.side2 + this.side3).toFixed(3));
+      return Number((this.side1 + this.side2 + this.side3).toFixed(3));
   };
 
   getArea() {
@@ -41,8 +42,14 @@ function getTriangle(side1, side2, side3) {
   try {
     return new Triangle(side1, side2, side3);
   } catch (error) {
-    return {
-      
+    let notTriange = {
+      getArea() {
+        return 'Ошибка! Треугольник не существует';
+      },
+      getPerimeter() {
+        return 'Ошибка! Треугольник не существует';
+      },
     };
+    return  notTriange;
   };
 }
